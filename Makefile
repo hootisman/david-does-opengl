@@ -13,4 +13,4 @@ glad.o:
 	$(CXX) -c ./glad.c
 
 clean:
-	rm -rf main.o out
+	rm -rf main.o glad.o out
