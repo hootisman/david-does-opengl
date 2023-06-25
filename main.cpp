@@ -39,6 +39,9 @@ int main() {
 
     processInput(window);
 
+    glClearColor(0.1f, 0.5f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
@@ -54,5 +57,6 @@ void processInput(GLFWwindow *window) {
 }
 
 void framebuffer_size_cb(GLFWwindow *window, int width, int height) {
+  cout << "width " << width << " height " << height << endl;
   glViewport(0, 0, width, height);
 }
