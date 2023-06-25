@@ -3,14 +3,14 @@ CXX=g++
 CFLAGS=-g -Wall
 LDLIBS= -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
-main: main.o
-	$(CXX) main.o glad.o $(CFLAGS) $(LDLIBS) -o out
+main: main.o glad.o
+	$(CXX) $^ $(CFLAGS) $(LDLIBS) -o out
 
-main.o:
-	$(CXX) -c ./main.cpp
+glad.o: glad.c
+	$(CC) -c $< -o $@
 
-glad.o:
-	$(CXX) -c ./glad.c
+%.o: %.cpp
+	$(CXX) -c $< -o $@
 
 clean:
 	rm -rf main.o glad.o out
