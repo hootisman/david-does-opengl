@@ -58,9 +58,9 @@ int main() {
 
   /* float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f,
    * 0.0f}; */
-  float vertices[] = {0.5f,  0.5f, 0.0f, 0.5f,  -0.5f, 0.0f,
-                      -0.5f, 0.5f, 0.0f, -0.5f, -0.5f, 0.0f};
-  unsigned int indices[] = {0, 1, 2, 1, 2, 3};
+  float vertices[] = {-0.5f, -0.5f, 0.0f,  0.0f, -0.5f, 0.0f, -0.25f, 0.5f,
+                      0.0f,  0.5f,  -0.5f, 0.0f, 0.25f, 0.5f, 0.0f};
+  unsigned int indices[] = {0, 1, 2, 1, 3, 4};
   unsigned int VAO, VBO, EBO;
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
