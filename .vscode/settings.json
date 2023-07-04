@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/hootisman/Projects/david-does-opengl",
+            "binaryPath": "/home/hootisman/Projects/david-does-opengl/out",
+            "binaryArgs": []
+        }
+    ]
+}

@@ -3,7 +3,7 @@ CXX=g++
 CFLAGS=-g -Wall
 LDLIBS= -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
-main: main.o glad.o
+main: main.o glad.o shader.o
 	$(CXX) $^ $(CFLAGS) $(LDLIBS) -o out
 
 glad.o: glad.c
