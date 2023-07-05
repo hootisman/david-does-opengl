@@ -46,7 +46,7 @@ int main() {
   {//pos              //color           //tex coords
    0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
    -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-   0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f
+   0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.1f, 1.0f
   };
   unsigned int indices[] = {0, 1, 2};
   unsigned int VAO, VBO, EBO;
@@ -101,7 +101,7 @@ int main() {
 
     glBindTexture(GL_TEXTURE_2D,texture);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
