@@ -46,7 +46,7 @@ int main() {
   {//pos              //color           //tex coords
    0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
    -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-   0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.1f, 1.0f
+   0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
   };
   unsigned int indices[] = {0, 1, 2};
   unsigned int VAO, VBO, EBO;
@@ -76,14 +76,32 @@ int main() {
 
   unsigned int texture;
   glGenTextures(1,&texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
 
+  glBindTexture(GL_TEXTURE_2D, texture);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 
   glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
+  glGenerateMipmap(GL_TEXTURE_2D);
+
+  stbi_image_free(data);
+
+  data = stbi_load("banana_block.png",&width,&height,&nrChannels,0);
+
+  unsigned int texture2;
+  glGenTextures(1,&texture2);
+
+  glActiveTexture(GL_TEXTURE1);
+
+  glBindTexture(GL_TEXTURE_2D, texture2);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+
+  glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGBA,GL_UNSIGNED_BYTE,data);
   glGenerateMipmap(GL_TEXTURE_2D);
 
   stbi_image_free(data);
@@ -98,8 +116,16 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     shaderProgram.use();
+    glUniform1i(glGetUniformLocation(shaderProgram.id,"theTexture"),0);
+    glUniform1i(glGetUniformLocation(shaderProgram.id,"theTexture2"),1);
 
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,texture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,texture2);
+
+
+
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 

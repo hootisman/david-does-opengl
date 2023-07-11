@@ -1,7 +1,7 @@
 CC=gcc
 CXX=g++
 CFLAGS=-g -Wall
-LDLIBS= -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+LDLIBS= -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
 main: main.o glad.o shader.o stb_image.o
 	$(CXX) $^ $(CFLAGS) $(LDLIBS) -o out
