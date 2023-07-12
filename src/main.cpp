@@ -2,7 +2,7 @@
 #include <string>
 #define GLFW_INCLUDE_NONE
 #include "../include/shader.h"
-#include "../include/stb_image.h"
+#include "../include/texture.h"
 #include <GLFW/glfw3.h>
 #include <cmath>
 #include <glad/glad.h>
@@ -70,43 +70,8 @@ int main() {
 
   // textures
 
-  int width, height, nrChannels;
-  unsigned char *data =
-      stbi_load("assets/container.jpg", &width, &height, &nrChannels, 0);
-
-  unsigned int texture;
-  glGenTextures(1, &texture);
-
-  glBindTexture(GL_TEXTURE_2D, texture);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-               GL_UNSIGNED_BYTE, data);
-  glGenerateMipmap(GL_TEXTURE_2D);
-
-  stbi_image_free(data);
-
-  data = stbi_load("assets/banana_block.png", &width, &height, &nrChannels, 0);
-
-  unsigned int texture2;
-  glGenTextures(1, &texture2);
-
-  glActiveTexture(GL_TEXTURE1);
-
-  glBindTexture(GL_TEXTURE_2D, texture2);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA,
-               GL_UNSIGNED_BYTE, data);
-  glGenerateMipmap(GL_TEXTURE_2D);
-
-  stbi_image_free(data);
+  Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
+  Texture texture2("assets/banana_block.png", GL_TEXTURE1, GL_RGBA);
 
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   while (!glfwWindowShouldClose(window)) {
@@ -120,10 +85,8 @@ int main() {
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture"), 0);
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture2"), 1);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    texture1.useTexture();
+    texture2.useTexture();
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
