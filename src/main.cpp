@@ -42,10 +42,11 @@ int main() {
   Shader shaderProgram("shaders/vertex.glsl", "shaders/fragment.glsl");
 
   float vertices[] = {// pos              //color           //tex coords
-                      0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
                       -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-                      0.0f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f};
-  unsigned int indices[] = {0, 1, 2};
+                      0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                      0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                      -0.5f, 0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f};
+  unsigned int indices[] = {0, 1, 2, 0, 2, 3};
   unsigned int VAO, VBO, EBO;
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
@@ -70,7 +71,7 @@ int main() {
 
   // textures
 
-  Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
+  Texture texture1("assets/sponge.png", GL_TEXTURE0, GL_RGBA);
   Texture texture2("assets/banana_block.png", GL_TEXTURE1, GL_RGBA);
 
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
@@ -89,7 +90,7 @@ int main() {
     texture2.useTexture();
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
