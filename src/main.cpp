@@ -6,6 +6,9 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 using namespace std;
@@ -71,8 +74,12 @@ int main() {
 
   // textures
 
-  Texture texture1("assets/sponge.png", GL_TEXTURE0, GL_RGBA);
+  Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
   Texture texture2("assets/banana_block.png", GL_TEXTURE1, GL_RGBA);
+
+  glm::vec4 vec(1.0f,0.0f,0.0f,1.0f);
+  glm::mat4 translate = glm::mat4(1.0f);
+
 
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   while (!glfwWindowShouldClose(window)) {

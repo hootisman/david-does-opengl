@@ -2,7 +2,7 @@
 #include "../include/stb_image.h"
 
 Texture::Texture(const char *imagePath, GLenum textureUnit, GLenum format) {
-  /* stbi_set_flip_vertically_on_load(true); */
+  stbi_set_flip_vertically_on_load(true);
   unsigned char *data = stbi_load(imagePath, &width, &height, &nrChannels, 0);
 
   glGenTextures(1, &id);
@@ -16,7 +16,7 @@ Texture::Texture(const char *imagePath, GLenum textureUnit, GLenum format) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format,
+  glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
                GL_UNSIGNED_BYTE, data);
   glGenerateMipmap(GL_TEXTURE_2D);
 
