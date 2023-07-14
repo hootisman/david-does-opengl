@@ -75,10 +75,7 @@ int main() {
   // textures
 
   Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
-  Texture texture2("assets/banana_block.png", GL_TEXTURE1, GL_RGBA);
-
-  glm::vec4 vec(1.0f,0.0f,0.0f,1.0f);
-  glm::mat4 translate = glm::mat4(1.0f);
+  Texture texture2("assets/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
 
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
@@ -95,6 +92,12 @@ int main() {
 
     texture1.useTexture();
     texture2.useTexture();
+
+    glm::mat4 transform = glm::mat4(1.0f);
+    transform = glm::translate(transform,glm::vec3(0.5f,0.5f,0.0f));
+    transform = glm::rotate(transform, (float)glfwGetTime(),glm::vec3(0.0f,0.0f,1.0f));
+    transform = glm::scale(transform, glm::vec3(0.5f,0.5f,0.5f));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "transform"),1,GL_FALSE,glm::value_ptr(transform));
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
