@@ -79,8 +79,8 @@ int main() {
   Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
   Texture texture2("assets/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
-  BlockRenderer block(0,0,0);
-  BlockRenderer block2(2,0,0);
+  BlockRenderer block(0,-1,0);
+  // BlockRenderer block2(1,0,0);
 
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   while (!glfwWindowShouldClose(window)) {
@@ -96,23 +96,25 @@ int main() {
     texture1.useTexture();
     texture2.useTexture();
     
-
-    glm::mat4 model = glm::mat4(1.0f);
-    // model = glm::translate(model,block.pos);
-    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(-55.0f),glm::vec3(1.0f,0.5f,0.0f));
-
     glm::mat4 view = glm::mat4(1.0f);
     view = glm::translate(view, glm::vec3(0.0f,0.0f,-3.0f));
 
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(model));
+    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
+    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
+
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block.getModel()));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
-
-
     block.drawElements();
+
+    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block2.getModel()));
+    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
+    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
+    // block2.drawElements();
 
 
     // glBindVertexArray(VAO);

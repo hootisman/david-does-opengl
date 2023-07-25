@@ -49,10 +49,11 @@ public:
     //     0,4,6
     // };
     unsigned int VAO, VBO, EBO;
-    glm::vec3 pos;
+    float x, y, z;
     // Texture texture1, texture2;
 
     BlockRenderer(float,float,float);
+    glm::mat4 getModel();
     void initBuffers();
     void drawElements();
 };

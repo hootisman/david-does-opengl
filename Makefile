@@ -1,7 +1,7 @@
 CC=gcc
 CXX=g++
 CFLAGS=-g -Wall
-LDLIBS= -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+LDLIBS= -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
 
 SRC_DIR := src

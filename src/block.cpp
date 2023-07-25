@@ -1,11 +1,22 @@
 #include "../include/block.h"
 #include "../include/texture.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
 
 BlockRenderer::BlockRenderer(float x, float y, float z){
     initBuffers();
-    pos = glm::vec3(x,y,z);
+    this->x = x;
+    this->y = y;
+    this->z = z;
     // texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
     // texture2("assets/awesomeface.png", GL_TEXTURE1, GL_RGBA);
+}
+glm::mat4 BlockRenderer::getModel(){
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(x,y,z));
+    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(-55.0f),glm::vec3(1.0f,0.5f,0.0f));
+
+    return model;
 }
 void BlockRenderer::initBuffers(){
 
