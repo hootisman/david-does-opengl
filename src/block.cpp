@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 BlockRenderer::BlockRenderer(float x, float y, float z){
-    initBuffers();
+    // initBuffers();
     this->x = x;
     this->y = y;
     this->z = z;
@@ -20,11 +20,9 @@ glm::mat4 BlockRenderer::getModel(){
 }
 void BlockRenderer::initBuffers(){
 
-  glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
   glGenBuffers(1, &EBO);
 
-  glBindVertexArray(VAO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -47,6 +45,5 @@ void BlockRenderer::initBuffers(){
 void BlockRenderer::drawElements(){
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 }

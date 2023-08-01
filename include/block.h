@@ -48,7 +48,7 @@ public:
     //     0,2,6,
     //     0,4,6
     // };
-    unsigned int VAO, VBO, EBO;
+    unsigned int VBO, EBO;
     float x, y, z;
     // Texture texture1, texture2;
 

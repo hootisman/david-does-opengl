@@ -79,9 +79,14 @@ int main() {
   Texture texture1("assets/container.jpg", GL_TEXTURE0, GL_RGB);
   Texture texture2("assets/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
-  BlockRenderer block(0,-1,0);
-  // BlockRenderer block2(1,0,0);
+  unsigned int VAO; 
+  glGenVertexArrays(1, &VAO);
+  glBindVertexArray(VAO);
 
+  BlockRenderer block(0,-1,0);
+  BlockRenderer block2(1,0,0);
+
+  block.initBuffers();
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   while (!glfwWindowShouldClose(window)) {
     processInput(window);
@@ -93,6 +98,7 @@ int main() {
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture"), 0);
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture2"), 1);
 
+
     texture1.useTexture();
     texture2.useTexture();
     
@@ -102,20 +108,20 @@ int main() {
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
-    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
-    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
-
-
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block.getModel()));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
-    block.drawElements();
-
     // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block2.getModel()));
     // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
     // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
-    // block2.drawElements();
 
+
+    glBindVertexArray(VAO);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block.getModel()));
+    block.drawElements();
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block2.getModel()));
+    block2.drawElements();
 
     // glBindVertexArray(VAO);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
