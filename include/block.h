@@ -30,6 +30,9 @@ const int indices[] = {
     1,5,7
 };
 class BlockRenderer{
+private:
+    void draw();
+
 public:
     // float vertices[] = {
     //     // pos              //color           //tex coords 
@@ -49,13 +52,24 @@ public:
     //     0,4,6
     // };
     unsigned int VBO, EBO;
-    float x, y, z;
+    // float x, y, z;
     // Texture texture1, texture2;
 
-    BlockRenderer(float,float,float);
+    // BlockRenderer() {};
     glm::mat4 getModel();
     void initBuffers();
-    void drawElements();
+    void drawAllBlocks();
+};
+
+class Block{
+private:
+    const Texture& m_texture;
+
+public:
+    float x, y, z;
+
+    Block(float, float, float, const Texture&);
+    void renderBlock(BlockRenderer&); 
 };
 
 #endif
