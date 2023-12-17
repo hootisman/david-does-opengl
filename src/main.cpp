@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void processInput(GLFWwindow *);
+void processInput(GLFWwindow *, float&, float&, float&);
 void framebuffer_size_cb(GLFWwindow *, int, int);
 
 static int WIDTH = 800;
@@ -82,6 +82,7 @@ int main() {
   Block block1(0,0,0, texture1);
   Block block2(0,1.0f,0, texture1);
 
+  float camX = 0.0f, camY = 0.0f, camZ = -3.0f;
 
   unsigned int VAO; 
   glGenVertexArrays(1, &VAO);
@@ -94,7 +95,7 @@ int main() {
   shaderProgram.use();
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   while (!glfwWindowShouldClose(window)) {
-    processInput(window);
+    processInput(window, camX, camY, camZ);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -107,7 +108,7 @@ int main() {
     texture2.useTexture();
     
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f,0.0f,-3.0f));
+    view = glm::translate(view, glm::vec3(camX,camY,camZ));
 
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
@@ -133,10 +134,23 @@ int main() {
   return 0;
 }
 
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window, float& camX, float& camY, float& camZ) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
+  }else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+    camZ += 0.1f;
+  }else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+    camX += 0.1f;
+  }else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+    camZ -= 0.1f;
+  }else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+    camX -= 0.1f;
+  }else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
+    camY -= 0.1f;
+  }else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
+    camY += 0.1f;
   }
+  
 }
 
 void framebuffer_size_cb(GLFWwindow *window, int width, int height) {
