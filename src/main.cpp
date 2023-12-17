@@ -42,7 +42,7 @@ int main() {
   }
 
   glfwSetFramebufferSizeCallback(window, framebuffer_size_cb);
-  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_DEPTH_TEST);    //for depth buffer
 
   Shader shaderProgram("shaders/vertex.glsl", "shaders/fragment.glsl");
 
@@ -83,6 +83,7 @@ int main() {
   Block block2(0,1.0f,0, texture1);
 
   float camX = 0.0f, camY = 0.0f, camZ = -3.0f;
+  float TESTFOVANGLE = 45.0f;
 
   unsigned int VAO; 
   glGenVertexArrays(1, &VAO);
@@ -97,8 +98,14 @@ int main() {
   while (!glfwWindowShouldClose(window)) {
     processInput(window, camX, camY, camZ);
 
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS){
+      TESTFOVANGLE += 0.5f;
+    }else if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS){
+      TESTFOVANGLE -= 0.5f;
+    }
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //for depth buffer
 
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture"), 0);
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture2"), 1);
@@ -111,7 +118,7 @@ int main() {
     view = glm::translate(view, glm::vec3(camX,camY,camZ));
 
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(TESTFOVANGLE), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
 
 
@@ -150,6 +157,8 @@ void processInput(GLFWwindow *window, float& camX, float& camY, float& camZ) {
   }else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
     camY += 0.1f;
   }
+
+  
   
 }
 
