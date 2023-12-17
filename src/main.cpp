@@ -80,6 +80,7 @@ int main() {
   Texture texture2("assets/awesomeface.png", GL_TEXTURE1, GL_RGBA);
 
   Block block1(0,0,0, texture1);
+  Block block2(0,1.0f,0, texture1);
 
 
   unsigned int VAO; 
@@ -98,7 +99,6 @@ int main() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // shaderProgram.use();
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture"), 0);
     glUniform1i(glGetUniformLocation(shaderProgram.id, "theTexture2"), 1);
 
@@ -112,17 +112,14 @@ int main() {
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
-    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(block2.getModel()));
-    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
-    // glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
 
 
     glBindVertexArray(VAO);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "view"),1,GL_FALSE,glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "projection"),1,GL_FALSE,glm::value_ptr(projection));
 
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram.id, "model"),1,GL_FALSE,glm::value_ptr(blockRenderer.getModel()));
-    blockRenderer.draw();
+    block1.renderBlock(shaderProgram.id, blockRenderer);
+    block2.renderBlock(shaderProgram.id, blockRenderer);
 
 
     // glBindVertexArray(VAO);

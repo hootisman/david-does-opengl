@@ -2,6 +2,7 @@
 #include "../include/texture.h"
 #include "../include/block.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 
 // Block::Block(float x, float y, float z, const Texture& texture){
@@ -15,10 +16,14 @@ Block::Block(float x, float y, float z, const Texture& texture) : m_texture(text
     this->z = z;
 }
 
-glm::mat4 BlockRenderer::getModel(){
+void Block::renderBlock(unsigned int shaderId, BlockRenderer& renderer){
+    glUniformMatrix4fv(glGetUniformLocation(shaderId, "model"),1,GL_FALSE,glm::value_ptr(renderer.getModel(this->x, this->y, this->z)));
+    renderer.draw();
+}
+
+glm::mat4 BlockRenderer::getModel(float x, float y, float z){
     glm::mat4 model = glm::mat4(1.0f);
-    // model = glm::translate(model, glm::vec3(x,y,z));
-    model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
+    model = glm::translate(model, glm::vec3(x, y, z));
     model = glm::rotate(model, (float)glfwGetTime() * glm::radians(-55.0f),glm::vec3(1.0f,0.5f,0.0f));
 
     return model;
