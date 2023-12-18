@@ -157,9 +157,6 @@ void processInput(GLFWwindow *window, float& camX, float& camY, float& camZ) {
   }else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS){
     camY += 0.1f;
   }
-
-  
-  
 }
 
 void framebuffer_size_cb(GLFWwindow *window, int width, int height) {

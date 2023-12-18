@@ -2,6 +2,7 @@ CC=gcc
 CXX=g++
 CFLAGS=-g -Wall
 LDLIBS= -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+LAP_LDLIBS= -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 
 
 SRC_DIR := src
@@ -25,6 +26,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) -c $< -o $@
-
+laptop: $(OBJ) $(C_OBJ)
+	$(CXX) $^ $(CFLAGS) $(LAP_LDLIBS) -o $(BIN)
 clean:
 	rm -rf $(OBJ_DIR)/* $(BIN)
